@@ -97,6 +97,17 @@ export class ResumeService {
     let score = 0;
     const foundSkills: string[] = [];
 
+    // Extract project and experience sections
+    const projectSection = this.extractSection(text, [
+      'projects?',
+      'project experience',
+      'work experience',
+      'professional experience',
+      'experience',
+      'employment',
+      'roles? and responsibilities',
+    ]);
+
     // 1. SKILLS ANALYSIS (40 points) - with variations and better matching
     const skillsMap = {
       JavaScript: ['javascript', 'js', 'ecmascript', 'es6', 'es2015'],
@@ -127,6 +138,8 @@ export class ResumeService {
       'Problem Solving': ['problem solving', 'analytical', 'troubleshoot'],
     };
 
+    let skillsWithProjectUsage = 0;
+
     for (const [skill, variants] of Object.entries(skillsMap)) {
       const isFound = variants.some((variant) => {
         if (variant.includes('\\b') || variant.includes('\\+')) {
@@ -136,9 +149,29 @@ export class ResumeService {
       });
       if (isFound) {
         foundSkills.push(skill);
+        
+        // Check if skill is also mentioned in project/experience section
+        const isUsedInProjects = variants.some((variant) => {
+          if (variant.includes('\\b') || variant.includes('\\+')) {
+            return new RegExp(variant, 'i').test(projectSection);
+          }
+          return projectSection.toLowerCase().includes(variant);
+        });
+        
+        if (isUsedInProjects) {
+          skillsWithProjectUsage++;
+        }
       }
     }
-    score += Math.min(foundSkills.length * 5, 40);
+    
+    // Base points for skills found (30 points max)
+    score += Math.min(foundSkills.length * 4, 30);
+    
+    // Bonus points for skills demonstrated in projects (20 points max)
+    // This rewards practical application of skills
+    score += Math.min(skillsWithProjectUsage * 3, 20);
+    
+    console.log(`📊 Skills Analysis: Total=${foundSkills.length}, Used in Projects=${skillsWithProjectUsage}`);
 
     // 2. EXPERIENCE (20 points) - Better parsing with multiple patterns
     const experiencePatterns = [
@@ -206,6 +239,48 @@ export class ResumeService {
       score,
       skills: foundSkills,
     };
+  }
+
+  // Helper method to extract specific sections from resume
+  private extractSection(text: string, sectionHeaders: string[]): string {
+    let extractedText = '';
+    
+    // Try to find section by headers
+    for (const header of sectionHeaders) {
+      const regex = new RegExp(
+        `(?:^|\\n)\\s*${header}\\s*:?\\s*\\n([\\s\\S]*?)(?=\\n\\s*(?:education|skills|certifications?|awards?|references?|hobbies|interests?)\\s*:?\\s*\\n|$)`,
+        'i',
+      );
+      const match = text.match(regex);
+      if (match && match[1]) {
+        extractedText += match[1] + '\n';
+      }
+    }
+    
+    // If no specific section found, check the whole text for experience indicators
+    if (!extractedText) {
+      // Look for bullets or lines that indicate work/project experience
+      const lines = text.split('\n');
+      for (const line of lines) {
+        const lowerLine = line.toLowerCase();
+        if (
+          lowerLine.includes('developed') ||
+          lowerLine.includes('implemented') ||
+          lowerLine.includes('designed') ||
+          lowerLine.includes('built') ||
+          lowerLine.includes('created') ||
+          lowerLine.includes('led') ||
+          lowerLine.includes('managed') ||
+          lowerLine.includes('worked on') ||
+          lowerLine.includes('responsible for') ||
+          lowerLine.includes('collaborated')
+        ) {
+          extractedText += line + '\n';
+        }
+      }
+    }
+    
+    return extractedText;
   }
 
   async updateEmployeeStatus(

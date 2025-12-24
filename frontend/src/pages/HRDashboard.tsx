@@ -241,7 +241,7 @@ export default function HRDashboard() {
               fontSize: { xs: '1.1rem', sm: '1.25rem' },
             }}
           >
-            Resume Evaluator - HR Portal
+            Resume Evaluator - HR DashBoard
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Typography
@@ -639,7 +639,7 @@ export default function HRDashboard() {
       >
         <Container maxWidth="lg">
           <Typography variant="body2" align="center" sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>
-            © 2025 Resume Evaluator - HR Portal. All rights reserved.
+            © 2025 Resume Evaluator. All rights reserved.
           </Typography>
         </Container>
       </Box>
