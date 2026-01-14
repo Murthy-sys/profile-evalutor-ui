@@ -8,7 +8,7 @@ import {
   Typography,
   Box,
   Alert,
-  MenuItem,
+  // MenuItem, // Commented out - role selection disabled
   Stack,
 } from '@mui/material';
 import { useAuth } from '../hooks/useAuth';
@@ -235,6 +235,7 @@ export default function Register() {
                   }}
                 />
               </Stack>
+              {/* Commented out for now
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <TextField
                   fullWidth
@@ -267,6 +268,7 @@ export default function Register() {
                   <MenuItem value="payroll">Payroll</MenuItem>
                 </TextField>
               </Stack>
+              */}
               <Button
                 type="submit"
                 fullWidth

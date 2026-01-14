@@ -415,6 +415,7 @@ export default function UserDashboard() {
                     </Button>
                   </Box>
 
+                  {/* Commented out for now
                   {user?.employeeStatus && (
                     <Fade in={true} timeout={1000}>
                       <Box sx={{ mt: 3, p: { xs: 1.5, sm: 2 }, bgcolor: 'primary.50', borderRadius: 2, border: '1px solid', borderColor: 'primary.200' }}>
@@ -427,6 +428,7 @@ export default function UserDashboard() {
                       </Box>
                     </Fade>
                   )}
+                  */}
                 </Paper>
               </Slide>
             </Box>
@@ -570,6 +572,7 @@ export default function UserDashboard() {
                       </Fade>
                     )}
 
+                    {/* Commented out for now
                     <Fade in={true} timeout={1300}>
                       <Box
                         sx={{
@@ -594,6 +597,7 @@ export default function UserDashboard() {
                         </Box>
                       </Box>
                     </Fade>
+                    */}
 
                     {/* Resume Score Display */}
                     {resumeScore !== null && (
