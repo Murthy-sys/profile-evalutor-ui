@@ -14,7 +14,7 @@ import {
   Slide,
   IconButton,
 } from '@mui/material';
-import { CloudUpload, CheckCircle, Person, Email, Phone, Badge, Logout, Star, Description } from '@mui/icons-material';
+import { CloudUpload, Person, Email, Phone, Badge, Logout, Star, Description } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { resumeAPI } from '../services/api';
 import { useAuth } from '../hooks/useAuth';
@@ -263,16 +263,12 @@ export default function UserDashboard() {
 
                   {message && (
                     <Fade in={true}>
-                      <Alert severity={uploadSuccess ? 'success' : 'error'} sx={{ mb: 2, fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>
-                        {message}
-                      </Alert>
-                    </Fade>
-                  )}
-
-                  {uploadSuccess && (
-                    <Fade in={true}>
-                      <Alert severity="info" icon={<CheckCircle />} sx={{ mb: 2, fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>
-                        Your resume has been sent to HR for review. You will be contacted if your profile matches our requirements.
+                      <Alert 
+                        severity={uploadSuccess ? 'success' : 'error'} 
+                        sx={{ mb: 2, fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
+                        onClose={() => setMessage('')}
+                      >
+                        {uploadSuccess ? 'Resume uploaded successfully!' : message}
                       </Alert>
                     </Fade>
                   )}
