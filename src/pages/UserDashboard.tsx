@@ -18,6 +18,7 @@ import { CloudUpload, CheckCircle, Person, Email, Phone, Badge, Logout, Star, De
 import { useNavigate, useLocation } from 'react-router-dom';
 import { resumeAPI } from '../services/api';
 import { useAuth } from '../hooks/useAuth';
+import Logo from '../components/Logo';
 
 export default function UserDashboard() {
   const [file, setFile] = useState<File | null>(null);
@@ -123,16 +124,9 @@ export default function UserDashboard() {
         }}
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography
-            variant="h6"
-            sx={{
-              color: 'white',
-              fontWeight: 700,
-              fontSize: { xs: '1.1rem', sm: '1.25rem' },
-            }}
-          >
-            Resume Evaluator
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Logo size={36} showText={true} />
+          </Box>
 
           {/* Navigation Tabs */}
           <Box

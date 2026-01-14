@@ -1,6 +1,7 @@
 import { Box, Container, Typography, Paper, Button } from '@mui/material';
 import { Construction, ArrowBack } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../components/Logo';
 
 interface UnderDevelopmentProps {
   title: string;
@@ -29,7 +30,10 @@ export default function UnderDevelopment({ title }: UnderDevelopmentProps) {
             backdropFilter: 'blur(10px)',
           }}
         >
-          <Construction sx={{ fontSize: 80, color: 'primary.main', mb: 3 }} />
+          <Box sx={{ mb: 3, display: 'flex', justifyContent: 'center' }}>
+            <Logo size={60} showText={false} />
+          </Box>
+          <Construction sx={{ fontSize: 60, color: 'warning.main', mb: 2 }} />
           <Typography
             variant="h4"
             sx={{
