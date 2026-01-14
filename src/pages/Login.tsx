@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff, Login as LoginIcon } from '@mui/icons-material';
 import { useAuth } from '../hooks/useAuth';
+import Logo from '../components/Logo';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -64,16 +65,7 @@ export default function Login() {
           borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
         }}
       >
-        <Typography
-          variant="h6"
-          sx={{
-            color: 'white',
-            fontWeight: 700,
-            fontSize: { xs: '1.1rem', sm: '1.25rem' },
-          }}
-        >
-          Resume Evaluator
-        </Typography>
+        <Logo size={36} showText={true} />
       </Box>
 
       {/* Main Content */}
