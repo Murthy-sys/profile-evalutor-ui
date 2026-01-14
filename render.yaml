@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: profile-evaluator
-    runtime: node
-    plan: free
+    name: profile-evalutor-ui
+    runtime: static
     buildCommand: npm install && npm run build
-    startCommand: npm run start
-    envVars:
-      - key: NODE_ENV
-        value: production
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
