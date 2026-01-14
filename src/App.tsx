@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import UserDashboard from './pages/UserDashboard';
 import HRDashboard from './pages/HRDashboard';
 import PayrollDashboard from './pages/PayrollDashboard';
+import UnderDevelopment from './pages/UnderDevelopment';
 import { Component } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
 
@@ -94,6 +95,22 @@ function App() {
                 element={
                   <PrivateRoute>
                     <DashboardRouter />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/my-learnings"
+                element={
+                  <PrivateRoute>
+                    <UnderDevelopment title="My Learnings" />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/resume-template"
+                element={
+                  <PrivateRoute>
+                    <UnderDevelopment title="Resume Template" />
                   </PrivateRoute>
                 }
               />

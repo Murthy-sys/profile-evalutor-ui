@@ -15,6 +15,7 @@ import {
   IconButton,
 } from '@mui/material';
 import { CloudUpload, CheckCircle, Person, Email, Phone, Badge, Logout, Star, Description } from '@mui/icons-material';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { resumeAPI } from '../services/api';
 import { useAuth } from '../hooks/useAuth';
 
@@ -27,6 +28,14 @@ export default function UserDashboard() {
   const [keySkills, setKeySkills] = useState<string[]>([]);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const navItems = [
+    { label: 'Dashboard', path: '/dashboard' },
+    { label: 'My Learnings', path: '/my-learnings' },
+    { label: 'Resume Template', path: '/resume-template' },
+  ];
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -124,6 +133,38 @@ export default function UserDashboard() {
           >
             Resume Evaluator
           </Typography>
+
+          {/* Navigation Tabs */}
+          <Box
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              alignItems: 'center',
+              gap: 1,
+            }}
+          >
+            {navItems.map((item) => (
+              <Button
+                key={item.path}
+                onClick={() => navigate(item.path)}
+                sx={{
+                  color: 'white',
+                  fontWeight: location.pathname === item.path ? 700 : 500,
+                  fontSize: '0.9rem',
+                  px: 2,
+                  py: 1,
+                  borderRadius: 2,
+                  bgcolor: location.pathname === item.path ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                    bgcolor: 'rgba(255, 255, 255, 0.15)',
+                  },
+                }}
+              >
+                {item.label}
+              </Button>
+            ))}
+          </Box>
+
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Typography
               variant="body2"
