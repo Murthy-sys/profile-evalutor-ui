@@ -273,83 +273,6 @@ export default function UserDashboard() {
                     </Fade>
                   )}
 
-                  {/* Uploaded Resume Display */}
-                  {(uploadSuccess || user?.resumePath) && (
-                    <Fade in={true} timeout={800}>
-                      <Box
-                        sx={{
-                          mb: 3,
-                          p: { xs: 2, sm: 2.5 },
-                          bgcolor: 'grey.50',
-                          borderRadius: 2,
-                          border: '1px solid',
-                          borderColor: 'grey.200',
-                        }}
-                      >
-                        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1.5, fontWeight: 600, fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
-                          Uploaded Resume
-                        </Typography>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            flexWrap: 'wrap',
-                            gap: 1,
-                          }}
-                        >
-                          <Box
-                            onClick={handleOpenResume}
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: 1,
-                              cursor: 'pointer',
-                              color: 'primary.main',
-                              transition: 'all 0.2s ease-in-out',
-                              '&:hover': {
-                                color: 'primary.dark',
-                                textDecoration: 'underline',
-                              },
-                            }}
-                          >
-                            <Description sx={{ fontSize: 24 }} />
-                            <Typography
-                              variant="body2"
-                              sx={{
-                                fontWeight: 500,
-                                fontSize: { xs: '0.85rem', sm: '0.9rem' },
-                              }}
-                            >
-                              {uploadedFileName || user?.attachment?.fileName || 'Resume.pdf'}
-                            </Typography>
-                          </Box>
-                          
-                          {/* Score Badge */}
-                          {(resumeScore !== null || user?.resumeScore || user?.attachment?.score) && (
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: 0.5,
-                                px: 1.5,
-                                py: 0.5,
-                                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                                borderRadius: 2,
-                                color: 'white',
-                              }}
-                            >
-                              <Star sx={{ fontSize: 18 }} />
-                              <Typography variant="body2" sx={{ fontWeight: 700, fontSize: { xs: '0.85rem', sm: '0.9rem' } }}>
-                                {resumeScore ?? user?.resumeScore ?? 0}/100
-                              </Typography>
-                            </Box>
-                          )}
-                        </Box>
-                      </Box>
-                    </Fade>
-                  )}
-
                   <Box sx={{ mt: 3 }}>
                     <Button
                       variant="outlined"
@@ -595,8 +518,63 @@ export default function UserDashboard() {
                     </Fade>
                     */}
 
+                    {/* Uploaded Resume Display */}
+                    {(uploadSuccess || user?.resumePath || user?.attachment) && (
+                      <Fade in={true} timeout={1300}>
+                        <Box
+                          sx={{
+                            p: { xs: 2, sm: 2.5 },
+                            bgcolor: 'grey.50',
+                            borderRadius: 2,
+                            border: '1px solid',
+                            borderColor: 'grey.200',
+                          }}
+                        >
+                          <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1.5, fontWeight: 600, fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
+                            Uploaded Resume
+                          </Typography>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              flexWrap: 'wrap',
+                              gap: 1,
+                            }}
+                          >
+                            <Box
+                              onClick={handleOpenResume}
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 1,
+                                cursor: 'pointer',
+                                color: 'primary.main',
+                                transition: 'all 0.2s ease-in-out',
+                                '&:hover': {
+                                  color: 'primary.dark',
+                                  textDecoration: 'underline',
+                                },
+                              }}
+                            >
+                              <Description sx={{ fontSize: 24 }} />
+                              <Typography
+                                variant="body2"
+                                sx={{
+                                  fontWeight: 500,
+                                  fontSize: { xs: '0.85rem', sm: '0.9rem' },
+                                }}
+                              >
+                                {uploadedFileName || user?.attachment?.fileName || 'Resume.pdf'}
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Box>
+                      </Fade>
+                    )}
+
                     {/* Resume Score Display */}
-                    {resumeScore !== null && (
+                    {(resumeScore !== null || user?.resumeScore || user?.attachment?.score) && (
                       <Fade in={true} timeout={1400}>
                         <Box
                           sx={{
@@ -621,26 +599,29 @@ export default function UserDashboard() {
                               textShadow: '2px 2px 4px rgba(0,0,0,0.2)',
                             }}
                           >
-                            {resumeScore}
+                            {resumeScore ?? user?.resumeScore ?? user?.attachment?.score ?? 0}
                             <Typography component="span" sx={{ fontSize: { xs: '1rem', sm: '1.25rem' }, ml: 0.5 }}>
                               /100
                             </Typography>
                           </Typography>
                           <Typography variant="body2" sx={{ mt: 1, opacity: 0.9, fontSize: { xs: '0.7rem', sm: '0.8rem' } }}>
-                            {resumeScore >= 80 ? '🌟 Excellent!' :
-                             resumeScore >= 60 ? '👍 Good job!' :
-                             resumeScore >= 40 ? '📝 Fair' :
-                             '💪 Keep improving!'}
+                            {(() => {
+                              const score = resumeScore ?? user?.resumeScore ?? user?.attachment?.score ?? 0;
+                              return score >= 80 ? '🌟 Excellent!' :
+                                     score >= 60 ? '👍 Good job!' :
+                                     score >= 40 ? '📝 Fair' :
+                                     '💪 Keep improving!';
+                            })()}
                           </Typography>
 
                           {/* Key Skills */}
-                          {keySkills.length > 0 && (
+                          {(keySkills.length > 0 || (user?.attachment?.skills && user.attachment.skills.length > 0)) && (
                             <Box sx={{ mt: 2 }}>
                               <Typography variant="caption" sx={{ opacity: 0.9, display: 'block', mb: 1 }}>
                                 Key Skills:
                               </Typography>
                               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, justifyContent: 'center' }}>
-                                {keySkills.slice(0, 5).map((skill, index) => (
+                                {(keySkills.length > 0 ? keySkills : user?.attachment?.skills || []).slice(0, 5).map((skill, index) => (
                                   <Box
                                     key={index}
                                     sx={{
