@@ -12,6 +12,14 @@ interface User {
   keySkills?: string[];
   employeeStatus?: string;
   referredBy?: string;
+  resumePath?: string;
+  resumeFileName?: string;
+  attachment?: {
+    fileName: string;
+    downloadUrl: string;
+    score: number;
+    skills: string[];
+  };
 }
 
 interface RegisterData {

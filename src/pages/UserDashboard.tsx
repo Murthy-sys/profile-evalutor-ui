@@ -14,7 +14,7 @@ import {
   Slide,
   IconButton,
 } from '@mui/material';
-import { CloudUpload, CheckCircle, Person, Email, Phone, Badge, Logout } from '@mui/icons-material';
+import { CloudUpload, CheckCircle, Person, Email, Phone, Badge, Logout, Star, Description } from '@mui/icons-material';
 import { resumeAPI } from '../services/api';
 import { useAuth } from '../hooks/useAuth';
 
@@ -23,12 +23,28 @@ export default function UserDashboard() {
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState('');
   const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [resumeScore, setResumeScore] = useState<number | null>(null);
+  const [keySkills, setKeySkills] = useState<string[]>([]);
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const { user, logout } = useAuth();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
       setUploadSuccess(false);
+    }
+  };
+
+  const handleOpenResume = async () => {
+    if (!user?._id) return;
+    try {
+      const response = await resumeAPI.downloadResume(user._id);
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      window.open(url, '_blank');
+    } catch (error) {
+      console.error('Error opening resume:', error);
+      setMessage('Failed to open resume. Please try again.');
     }
   };
 
@@ -41,8 +57,14 @@ export default function UserDashboard() {
     setUploading(true);
     setMessage('');
     setUploadSuccess(false);
+    setResumeScore(null);
+    setKeySkills([]);
     try {
-      await resumeAPI.uploadResume(file);
+      const response = await resumeAPI.uploadResume(file);
+      const { score, skills, resumeFileName } = response.data;
+      setResumeScore(score || null);
+      setKeySkills(skills || []);
+      setUploadedFileName(resumeFileName || file.name);
       setMessage('Resume uploaded successfully! Our HR team will review it shortly.');
       setUploadSuccess(true);
     } catch (error: unknown) {
@@ -217,6 +239,83 @@ export default function UserDashboard() {
                       <Alert severity="info" icon={<CheckCircle />} sx={{ mb: 2, fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>
                         Your resume has been sent to HR for review. You will be contacted if your profile matches our requirements.
                       </Alert>
+                    </Fade>
+                  )}
+
+                  {/* Uploaded Resume Display */}
+                  {(uploadSuccess || user?.resumePath) && (
+                    <Fade in={true} timeout={800}>
+                      <Box
+                        sx={{
+                          mb: 3,
+                          p: { xs: 2, sm: 2.5 },
+                          bgcolor: 'grey.50',
+                          borderRadius: 2,
+                          border: '1px solid',
+                          borderColor: 'grey.200',
+                        }}
+                      >
+                        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1.5, fontWeight: 600, fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
+                          Uploaded Resume
+                        </Typography>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            flexWrap: 'wrap',
+                            gap: 1,
+                          }}
+                        >
+                          <Box
+                            onClick={handleOpenResume}
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 1,
+                              cursor: 'pointer',
+                              color: 'primary.main',
+                              transition: 'all 0.2s ease-in-out',
+                              '&:hover': {
+                                color: 'primary.dark',
+                                textDecoration: 'underline',
+                              },
+                            }}
+                          >
+                            <Description sx={{ fontSize: 24 }} />
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                fontWeight: 500,
+                                fontSize: { xs: '0.85rem', sm: '0.9rem' },
+                              }}
+                            >
+                              {uploadedFileName || user?.attachment?.fileName || 'Resume.pdf'}
+                            </Typography>
+                          </Box>
+                          
+                          {/* Score Badge */}
+                          {(resumeScore !== null || user?.resumeScore || user?.attachment?.score) && (
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 0.5,
+                                px: 1.5,
+                                py: 0.5,
+                                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                borderRadius: 2,
+                                color: 'white',
+                              }}
+                            >
+                              <Star sx={{ fontSize: 18 }} />
+                              <Typography variant="body2" sx={{ fontWeight: 700, fontSize: { xs: '0.85rem', sm: '0.9rem' } }}>
+                                {resumeScore ?? user?.resumeScore ?? 0}/100
+                              </Typography>
+                            </Box>
+                          )}
+                        </Box>
+                      </Box>
                     </Fade>
                   )}
 
@@ -460,6 +559,72 @@ export default function UserDashboard() {
                         </Box>
                       </Box>
                     </Fade>
+
+                    {/* Resume Score Display */}
+                    {resumeScore !== null && (
+                      <Fade in={true} timeout={1400}>
+                        <Box
+                          sx={{
+                            p: { xs: 2, sm: 3 },
+                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                            borderRadius: 2,
+                            textAlign: 'center',
+                            color: 'white',
+                          }}
+                        >
+                          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 1 }}>
+                            <Star sx={{ fontSize: 28 }} />
+                            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                              Resume Score
+                            </Typography>
+                          </Box>
+                          <Typography
+                            variant="h3"
+                            sx={{
+                              fontWeight: 700,
+                              fontSize: { xs: '2.5rem', sm: '3rem' },
+                              textShadow: '2px 2px 4px rgba(0,0,0,0.2)',
+                            }}
+                          >
+                            {resumeScore}
+                            <Typography component="span" sx={{ fontSize: { xs: '1rem', sm: '1.25rem' }, ml: 0.5 }}>
+                              /100
+                            </Typography>
+                          </Typography>
+                          <Typography variant="body2" sx={{ mt: 1, opacity: 0.9, fontSize: { xs: '0.7rem', sm: '0.8rem' } }}>
+                            {resumeScore >= 80 ? '🌟 Excellent!' :
+                             resumeScore >= 60 ? '👍 Good job!' :
+                             resumeScore >= 40 ? '📝 Fair' :
+                             '💪 Keep improving!'}
+                          </Typography>
+
+                          {/* Key Skills */}
+                          {keySkills.length > 0 && (
+                            <Box sx={{ mt: 2 }}>
+                              <Typography variant="caption" sx={{ opacity: 0.9, display: 'block', mb: 1 }}>
+                                Key Skills:
+                              </Typography>
+                              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, justifyContent: 'center' }}>
+                                {keySkills.slice(0, 5).map((skill, index) => (
+                                  <Box
+                                    key={index}
+                                    sx={{
+                                      px: 1,
+                                      py: 0.3,
+                                      bgcolor: 'rgba(255,255,255,0.2)',
+                                      borderRadius: 1,
+                                      fontSize: { xs: '0.65rem', sm: '0.7rem' },
+                                    }}
+                                  >
+                                    {skill}
+                                  </Box>
+                                ))}
+                              </Box>
+                            </Box>
+                          )}
+                        </Box>
+                      </Fade>
+                    )}
                   </Stack>
                 </Paper>
               </Slide>
