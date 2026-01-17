@@ -138,7 +138,7 @@ export default function HomePage() {
         />
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
-            <Chip 
+            {/* <Chip 
               label="🚀 Trusted by 10,000+ Professionals" 
               sx={{ 
                 bgcolor: 'rgba(255, 255, 255, 0.15)', 
@@ -150,7 +150,7 @@ export default function HomePage() {
                 fontSize: '0.875rem',
                 backdropFilter: 'blur(10px)',
               }} 
-            />
+            /> */}
             <Typography
               variant="h1"
               component="h1"
@@ -214,7 +214,7 @@ export default function HomePage() {
               >
                 {user ? 'Go to Dashboard' : 'Get Started Free'}
               </Button>
-              <Button
+              {/* <Button
                 variant="outlined"
                 size="large"
                 sx={{
@@ -232,7 +232,7 @@ export default function HomePage() {
                 }}
               >
                 Watch Demo
-              </Button>
+              </Button> */}
             </Stack>
           </Box>
         </Container>
