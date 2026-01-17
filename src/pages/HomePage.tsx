@@ -616,36 +616,74 @@ export default function HomePage() {
       <Box
         component="footer"
         sx={{
-          py: 5,
+          py: 6,
           px: 3,
           bgcolor: '#0f0f1a',
           color: 'white',
         }}
       >
         <Container maxWidth="lg">
+          <Grid container spacing={4} sx={{ mb: 4 }}>
+            {/* Logo & About */}
+            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+              <Logo size={32} showText={true} variant="light" />
+              <Typography variant="body2" sx={{ opacity: 0.6, mt: 2, lineHeight: 1.7 }}>
+                Empowering professionals to build better careers through smart profile evaluation and skill assessments.
+              </Typography>
+            </Grid>
+
+            {/* Contact Info */}
+            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+              <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 2, color: '#fbbf24' }}>
+                Contact Us
+              </Typography>
+              <Stack spacing={1.5}>
+                <Typography variant="body2" sx={{ opacity: 0.7 }}>
+                  📞 +91 7702327702
+                </Typography>
+                <Typography variant="body2" sx={{ opacity: 0.7 }}>
+                  ✉️ murthy7702@gmail.com
+                </Typography>
+              </Stack>
+            </Grid>
+
+            {/* Address */}
+            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+              <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 2, color: '#fbbf24' }}>
+                Address
+              </Typography>
+              <Typography variant="body2" sx={{ opacity: 0.7, lineHeight: 1.7 }}>
+                📍 #52/52, 14th Cross, CK Nagar,<br />
+                Hosa Road, Electronic City,<br />
+                Bangalore - 560100, India
+              </Typography>
+            </Grid>
+          </Grid>
+
+          {/* Bottom Bar */}
           <Box
             sx={{
+              pt: 3,
+              borderTop: '1px solid rgba(255,255,255,0.1)',
               display: 'flex',
               flexDirection: { xs: 'column', sm: 'row' },
               justifyContent: 'space-between',
               alignItems: 'center',
-              gap: 3,
+              gap: 2,
             }}
           >
-            <Logo size={32} showText={true} variant="light" />
-            <Typography variant="body2" sx={{ opacity: 0.6, letterSpacing: 0.5 }}>
+            <Typography variant="body2" sx={{ opacity: 0.5, letterSpacing: 0.5 }}>
               © 2026 Profile Evaluator. All rights reserved.
             </Typography>
-            <Box sx={{ display: 'flex', gap: 4 }}>
-              {['Privacy', 'Terms', 'Contact'].map((item) => (
+            <Box sx={{ display: 'flex', gap: 3 }}>
+              {['Privacy Policy', 'Terms of Service'].map((item) => (
                 <Typography
                   key={item}
                   variant="body2"
                   sx={{
                     cursor: 'pointer',
-                    opacity: 0.6,
+                    opacity: 0.5,
                     transition: 'all 0.2s ease',
-                    letterSpacing: 0.5,
                     '&:hover': { opacity: 1, color: '#667eea' },
                   }}
                 >
