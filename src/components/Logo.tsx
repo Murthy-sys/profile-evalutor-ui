@@ -3,10 +3,12 @@ import { useId } from 'react';
 interface LogoProps {
   size?: number;
   showText?: boolean;
+  variant?: 'default' | 'light';
 }
 
-export default function Logo({ size = 40, showText = true }: LogoProps) {
+export default function Logo({ size = 40, showText = true, variant = 'default' }: LogoProps) {
   const uniqueId = useId();
+  const isLight = variant === 'light';
   
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -16,7 +18,7 @@ export default function Logo({ size = 40, showText = true }: LogoProps) {
         viewBox="0 0 100 100"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        aria-label="ResumeEval Logo"
+        aria-label="ProfileEval Logo"
         role="img"
       >
         {/* Unique Gradient Definitions */}
@@ -40,7 +42,7 @@ export default function Logo({ size = 40, showText = true }: LogoProps) {
           </filter>
         </defs>
         
-        {/* Outer Hexagonal Shape - Unique to ResumeEval */}
+        {/* Outer Hexagonal Shape - Unique to ProfileEval */}
         <path
           d="M50 2 L91 25 L91 75 L50 98 L9 75 L9 25 Z"
           fill={`url(#${uniqueId}-main)`}
@@ -55,11 +57,11 @@ export default function Logo({ size = 40, showText = true }: LogoProps) {
           strokeWidth="1.5"
         />
         
-        {/* Stylized "RE" Monogram - Unique identifier */}
+        {/* Stylized "PE" Monogram - Unique identifier */}
         <g transform="translate(22, 28)">
-          {/* R letter stylized */}
+          {/* P letter stylized */}
           <path
-            d="M8 8 L8 40 M8 8 L22 8 Q30 8 30 16 Q30 24 22 24 L8 24 M22 24 L32 40"
+            d="M8 8 L8 40 M8 8 L22 8 Q30 8 30 16 Q30 24 22 24 L8 24"
             stroke="white"
             strokeWidth="5"
             strokeLinecap="round"
@@ -104,23 +106,27 @@ export default function Logo({ size = 40, showText = true }: LogoProps) {
         <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
           <span
             style={{
-              fontSize: size * 0.45,
+              fontSize: size * 0.4,
               fontWeight: 800,
-              background: 'linear-gradient(135deg, #667eea 0%, #7c3aed 50%, #764ba2 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
+              color: isLight ? '#ffffff' : undefined,
+              background: isLight 
+                ? 'none'
+                : 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #f59e0b 100%)',
+              WebkitBackgroundClip: isLight ? undefined : 'text',
+              WebkitTextFillColor: isLight ? '#ffffff' : 'transparent',
+              backgroundClip: isLight ? undefined : 'text',
               fontFamily: '"Segoe UI", system-ui, -apple-system, sans-serif',
               letterSpacing: '-0.5px',
+              textShadow: isLight ? '0 2px 4px rgba(0,0,0,0.2)' : 'none',
             }}
           >
-            ResumeEval
+            Profile Evaluator
           </span>
           <span
             style={{
               fontSize: size * 0.18,
               fontWeight: 500,
-              color: '#764ba2',
+              color: isLight ? 'rgba(255,255,255,0.85)' : '#764ba2',
               fontFamily: '"Segoe UI", system-ui, -apple-system, sans-serif',
               letterSpacing: '2px',
               textTransform: 'uppercase',

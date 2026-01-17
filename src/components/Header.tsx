@@ -98,7 +98,7 @@ export default function Header({
           }}
           onClick={handleLogoClick}
         >
-          <Logo size={36} showText={true} />
+          <Logo size={36} showText={true} variant="light" />
         </Box>
 
         {/* Navigation Tabs */}

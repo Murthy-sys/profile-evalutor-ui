@@ -583,7 +583,7 @@ export default function HomePage() {
             Ready to Boost Your Career?
           </Typography>
           <Typography variant="body1" sx={{ opacity: 0.9, mb: 5, maxWidth: 500, mx: 'auto', lineHeight: 1.7, fontSize: '1.1rem' }}>
-            Join thousands of professionals who have transformed their careers with Resume Evaluator
+            Join thousands of professionals who have transformed their careers with Profile Evaluator
           </Typography>
           <Button
             variant="contained"
@@ -632,9 +632,9 @@ export default function HomePage() {
               gap: 3,
             }}
           >
-            <Logo size={32} showText={true} />
+            <Logo size={32} showText={true} variant="light" />
             <Typography variant="body2" sx={{ opacity: 0.6, letterSpacing: 0.5 }}>
-              © 2026 Resume Evaluator. All rights reserved.
+              © 2026 Profile Evaluator. All rights reserved.
             </Typography>
             <Box sx={{ display: 'flex', gap: 4 }}>
               {['Privacy', 'Terms', 'Contact'].map((item) => (
