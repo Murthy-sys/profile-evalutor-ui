@@ -1,6 +1,7 @@
 import { Box, Container, Typography, Paper, Button } from '@mui/material';
 import { Construction, ArrowBack } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 import Logo from '../components/Logo';
 
 interface UnderDevelopmentProps {
@@ -9,6 +10,12 @@ interface UnderDevelopmentProps {
 
 export default function UnderDevelopment({ title }: UnderDevelopmentProps) {
   const navigate = useNavigate();
+
+  const navItems = [
+    { label: 'Dashboard', path: '/dashboard' },
+    { label: 'My Learnings', path: '/my-learnings' },
+    { label: 'Resume Template', path: '/resume-template' },
+  ];
 
   return (
     <Box
@@ -19,6 +26,14 @@ export default function UnderDevelopment({ title }: UnderDevelopmentProps) {
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       }}
     >
+      {/* Header */}
+      <Header
+        variant="transparent"
+        navItems={navItems}
+        showUserInfo={true}
+        showLogout={true}
+      />
+
       <Container maxWidth="md" sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', py: 4 }}>
         <Paper
           elevation={10}

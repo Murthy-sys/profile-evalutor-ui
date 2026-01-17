@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 import { AuthProvider } from './context/AuthContext';
 import { useAuth } from './hooks/useAuth';
+import HomePage from './pages/HomePage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import UserDashboard from './pages/UserDashboard';
@@ -88,6 +89,7 @@ function App() {
         <AuthProvider>
           <Router>
             <Routes>
+              <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route
@@ -114,7 +116,6 @@ function App() {
                   </PrivateRoute>
                 }
               />
-              <Route path="/" element={<Navigate to="/dashboard" />} />
             </Routes>
           </Router>
         </AuthProvider>

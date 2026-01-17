@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff, Login as LoginIcon } from '@mui/icons-material';
 import { useAuth } from '../hooks/useAuth';
-import Logo from '../components/Logo';
+import Header from '../components/Header';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -55,18 +55,7 @@ export default function Login() {
       }}
     >
       {/* Header */}
-      <Box
-        component="header"
-        sx={{
-          py: 2,
-          px: 3,
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-        }}
-      >
-        <Logo size={36} showText={true} />
-      </Box>
+      <Header variant="transparent" />
 
       {/* Main Content */}
       <Box

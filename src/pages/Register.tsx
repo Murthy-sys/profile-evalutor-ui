@@ -12,6 +12,7 @@ import {
   Stack,
 } from '@mui/material';
 import { useAuth } from '../hooks/useAuth';
+import Header from '../components/Header';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -62,27 +63,7 @@ export default function Register() {
       }}
     >
       {/* Header */}
-      <Box
-        component="header"
-        sx={{
-          py: 2,
-          px: 3,
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-        }}
-      >
-        <Typography
-          variant="h6"
-          sx={{
-            color: 'white',
-            fontWeight: 700,
-            fontSize: { xs: '1.1rem', sm: '1.25rem' },
-          }}
-        >
-          Resume Evaluator
-        </Typography>
-      </Box>
+      <Header variant="transparent" />
 
       {/* Main Content */}
       <Box

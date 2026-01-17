@@ -12,13 +12,11 @@ import {
   Backdrop,
   Fade,
   Slide,
-  IconButton,
 } from '@mui/material';
-import { CloudUpload, Person, Email, Phone, Badge, Logout, Star, Description } from '@mui/icons-material';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { CloudUpload, Person, Email, Phone, Badge, Star, Description } from '@mui/icons-material';
 import { resumeAPI } from '../services/api';
 import { useAuth } from '../hooks/useAuth';
-import Logo from '../components/Logo';
+import Header from '../components/Header';
 
 export default function UserDashboard() {
   const [file, setFile] = useState<File | null>(null);
@@ -28,9 +26,7 @@ export default function UserDashboard() {
   const [resumeScore, setResumeScore] = useState<number | null>(null);
   const [keySkills, setKeySkills] = useState<string[]>([]);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { user } = useAuth();
 
   const navItems = [
     { label: 'Dashboard', path: '/dashboard' },
@@ -113,79 +109,12 @@ export default function UserDashboard() {
       </Backdrop>
 
       {/* Header */}
-      <Box
-        component="header"
-        sx={{
-          py: 2,
-          px: 3,
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-        }}
-      >
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Logo size={36} showText={true} />
-          </Box>
-
-          {/* Navigation Tabs */}
-          <Box
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              alignItems: 'center',
-              gap: 1,
-            }}
-          >
-            {navItems.map((item) => (
-              <Button
-                key={item.path}
-                onClick={() => navigate(item.path)}
-                sx={{
-                  color: 'white',
-                  fontWeight: location.pathname === item.path ? 700 : 500,
-                  fontSize: '0.9rem',
-                  px: 2,
-                  py: 1,
-                  borderRadius: 2,
-                  bgcolor: location.pathname === item.path ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
-                  transition: 'all 0.3s ease-in-out',
-                  '&:hover': {
-                    bgcolor: 'rgba(255, 255, 255, 0.15)',
-                  },
-                }}
-              >
-                {item.label}
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Typography
-              variant="body2"
-              sx={{
-                color: 'white',
-                fontSize: { xs: '0.8rem', sm: '0.9rem' },
-                display: { xs: 'none', sm: 'block' },
-              }}
-            >
-              {user?.fullName}
-            </Typography>
-            <IconButton
-              onClick={logout}
-              sx={{
-                color: 'white',
-                transition: 'all 0.3s ease-in-out',
-                '&:hover': {
-                  bgcolor: 'rgba(255, 255, 255, 0.1)',
-                },
-              }}
-              title="Logout"
-            >
-              <Logout />
-            </IconButton>
-          </Box>
-        </Box>
-      </Box>
+      <Header
+        variant="transparent"
+        navItems={navItems}
+        showUserInfo={true}
+        showLogout={true}
+      />
 
       {/* Main Content */}
       <Box

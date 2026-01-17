@@ -29,7 +29,6 @@ import {
 import {
   Search,
   FilterList,
-  Logout,
   Refresh,
   Edit,
   TrendingUp,
@@ -37,7 +36,7 @@ import {
   Download,
 } from '@mui/icons-material';
 import { resumeAPI } from '../services/api';
-import { useAuth } from '../hooks/useAuth';
+import Header from '../components/Header';
 
 interface User {
   _id: string;
@@ -54,7 +53,6 @@ interface User {
 type SortOrder = 'asc' | 'desc';
 
 export default function HRDashboard() {
-  const { user, logout } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -222,54 +220,12 @@ export default function HRDashboard() {
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       }}
     >
-      <Box
-        component="header"
-        sx={{
-          py: 2,
-          px: 3,
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-        }}
-      >
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography
-            variant="h6"
-            sx={{
-              color: 'white',
-              fontWeight: 700,
-              fontSize: { xs: '1.1rem', sm: '1.25rem' },
-            }}
-          >
-            Resume Evaluator - HR DashBoard
-          </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Typography
-              variant="body2"
-              sx={{
-                color: 'white',
-                fontSize: { xs: '0.8rem', sm: '0.9rem' },
-                display: { xs: 'none', sm: 'block' },
-              }}
-            >
-              {user?.fullName} (HR)
-            </Typography>
-            <IconButton
-              onClick={logout}
-              sx={{
-                color: 'white',
-                transition: 'all 0.3s ease-in-out',
-                '&:hover': {
-                  bgcolor: 'rgba(255, 255, 255, 0.1)',
-                },
-              }}
-              title="Logout"
-            >
-              <Logout />
-            </IconButton>
-          </Box>
-        </Box>
-      </Box>
+      {/* Header */}
+      <Header
+        variant="transparent"
+        showUserInfo={true}
+        showLogout={true}
+      />
 
       <Box sx={{ flex: 1, py: { xs: 2, sm: 3, md: 4 }, px: { xs: 2, sm: 3 } }}>
         <Container maxWidth="xl">

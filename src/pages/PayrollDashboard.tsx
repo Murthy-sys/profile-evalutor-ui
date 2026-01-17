@@ -11,8 +11,10 @@ import {
   TableRow,
   Chip,
   LinearProgress,
+  Box,
 } from '@mui/material';
 import { resumeAPI } from '../services/api';
+import Header from '../components/Header';
 
 interface User {
   _id: string;
@@ -52,32 +54,51 @@ export default function PayrollDashboard() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: { xs: 2, sm: 3, md: 4 }, mb: { xs: 2, sm: 3, md: 4 }, px: { xs: 1, sm: 2, md: 3 } }}>
-      <Typography 
-        variant="h4" 
-        component="h1" 
-        gutterBottom
-        sx={{ 
-          mb: { xs: 1, sm: 2 },
-          fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' },
-        }}
-      >
-        Payroll Dashboard - Referral Payments
-      </Typography>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      }}
+    >
+      {/* Header */}
+      <Header
+        variant="transparent"
+        showUserInfo={true}
+        showLogout={true}
+      />
 
-      <Typography 
-        variant="body1" 
-        color="text.secondary" 
-        gutterBottom
-        sx={{ 
-          mb: { xs: 2, sm: 3 },
-          fontSize: { xs: '0.875rem', sm: '1rem' },
-        }}
-      >
-        Employees who completed probation and are eligible for referral payments
-      </Typography>
+      <Box sx={{ flex: 1, py: { xs: 2, sm: 3, md: 4 }, px: { xs: 2, sm: 3 } }}>
+        <Container maxWidth="lg">
+          <Typography 
+            variant="h4" 
+            component="h1" 
+            gutterBottom
+            sx={{ 
+              color: 'white',
+              fontWeight: 700,
+              mb: { xs: 1, sm: 2 },
+              fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' },
+            }}
+          >
+            Payroll Dashboard - Referral Payments 💰
+          </Typography>
 
-      <TableContainer component={Paper} sx={{ mt: 3, overflowX: 'auto' }}>
+          <Typography 
+            variant="body1" 
+            gutterBottom
+            sx={{ 
+              color: 'rgba(255, 255, 255, 0.9)',
+              mb: { xs: 2, sm: 3 },
+              fontSize: { xs: '0.875rem', sm: '1rem' },
+            }}
+          >
+            Employees who completed probation and are eligible for referral payments
+          </Typography>
+
+          <Paper elevation={10} sx={{ borderRadius: 2 }}>
+            <TableContainer sx={{ overflowX: 'auto' }}>
         <Table sx={{ minWidth: { xs: 500, sm: 650 } }}>
           <TableHead>
             <TableRow>
@@ -118,7 +139,10 @@ export default function PayrollDashboard() {
             )}
           </TableBody>
         </Table>
-      </TableContainer>
-    </Container>
+            </TableContainer>
+          </Paper>
+        </Container>
+      </Box>
+    </Box>
   );
 }
