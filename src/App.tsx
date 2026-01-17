@@ -9,6 +9,7 @@ import UserDashboard from './pages/UserDashboard';
 import HRDashboard from './pages/HRDashboard';
 import PayrollDashboard from './pages/PayrollDashboard';
 import UnderDevelopment from './pages/UnderDevelopment';
+import ResumeTemplates from './pages/ResumeTemplates';
 import { Component } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
 
@@ -112,7 +113,7 @@ function App() {
                 path="/resume-template"
                 element={
                   <PrivateRoute>
-                    <UnderDevelopment title="Resume Template" />
+                    <ResumeTemplates />
                   </PrivateRoute>
                 }
               />

@@ -41,6 +41,14 @@ export default function HomePage() {
     }
   };
 
+  const handleResumeAction = () => {
+    if (user) {
+      navigate('/resume-template');
+    } else {
+      setLoginOpen(true);
+    }
+  };
+
   const resumeServices = [
     {
       icon: <Description sx={{ fontSize: 48, color: 'white' }} />,
@@ -342,7 +350,7 @@ export default function HomePage() {
                       boxShadow: '0 24px 48px rgba(0,0,0,0.25)',
                     },
                   }}
-                  onClick={handleGetStarted}
+                  onClick={handleResumeAction}
                 >
                   <CardContent sx={{ p: { xs: 3.5, md: 4.5 }, position: 'relative', zIndex: 1 }}>
                     <Box sx={{ mb: 3, '& svg': { fontSize: 48 } }}>{service.icon}</Box>
